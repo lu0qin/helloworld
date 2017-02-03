@@ -1,2 +1,2 @@
-Welcome!
-It's iss53.
+Hello world!
+Welcome! - iss53
