@@ -4,4 +4,7 @@ Hello world!
 
 
 edited by anotqin on 10th. May.
+news
+news
+news
 
