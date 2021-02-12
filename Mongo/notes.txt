@@ -1,10 +1,12 @@
-Run MongoBD
+#Run MongoBD
+
 >CMD
 >mongod --dbpath c:\data\db
- start mongo db, and specify the db location
+start mongo db, and specify the db location
+
 >mongo
 
-Run MongoDB as Windows service
+#Run MongoDB as Windows service
 >Administrator Command (Ctrl + Shift + Enter)
  create the Windows service, as the role of Admin
 >mongod --config C:\Tools\MongoDB\mongod.cfg --install --serviceName Apple
@@ -16,6 +18,10 @@ Run MongoDB as Windows service
 When launch shell, if the file named '.mongorc.js' is detected in user's HOME dir, mongo runs its script meanwhile.
 U can prevent it from being loaded by using --norc.
 >mongo --norc
+
+#conf file
+>path-to-installation\bin\mongod.conf
+dbpath can be found in conf file
 
 -----TIPS-----
 user's HOME directory
