@@ -1,0 +1,156 @@
+Run MongoBD
+>CMD
+>mongod --dbpath c:\data\db
+ start mongo db, and specify the db location
+>mongo
+
+Run MongoDB as Windows service
+>Administrator Command (Ctrl + Shift + Enter)
+ create the Windows service, as the role of Admin
+>mongod --config C:\Tools\MongoDB\mongod.cfg --install --serviceName Apple
+>net start Apple
+>net stop Apple
+>cd <mongodb installation dir>
+>./bin/mongo
+
+When launch shell, if the file named '.mongorc.js' is detected in user's HOME dir, mongo runs its script meanwhile.
+U can prevent it from being loaded by using --norc.
+>mongo --norc
+
+-----TIPS-----
+user's HOME directory
+in CMD
+>echo %USERPROFILE%
+C:\Users\i070218
+
+in PowerShell
+PS C:> cd env:
+PS Env:> ls userprofile
+Name                           Value
+----                           -----
+USERPROFILE                    C:\Users\i070218
+PS Env:> cd C:\
+
+or, 
+PS C:> $env:userprofile
+
+other samples,
+PS C:> $env:path.split(";")
+=====TIPS=====
+
+What's we can do in .mongorc.js?
+1. Customize prompt
+in .mongorc.js, 
+prompt = function() { return "MongoDB> "; }
+> .\bin\mongo
+MongoDB> 
+
+2. External editor
+var EDITOR = "notepad.exe";
+> .\bin\mongo
+MongoDB> var a = 1;
+MongoDB> edit a
+notepad will be opened, and then U can modify the value of a. Save it, before close the file.
+
+3. Change the mongo Shell Batch Size
+DBQuery.shellBatchSize = 2;		// default is up to 20
+type 'it' to continue
+
+Query an Array
+	[ 
+	  { name: "Tom", tags: ["red", "black"], ... },
+	  { name: "Jerry", tags: ["black", "red"], ... },
+	  { name: "Jerry", tags: ["red"], ... },
+	  ...
+	]
+db.coll.find( { tags: ["red"] } ) => 1 document found. want to find field 'tags' which exactly equals to ["red"], tags === ["red"]
+db.coll.find({ tags: "red" }) => 3 document found. want to find the field 'tags' which HAS "red"
+db.coll.find({ tags: { $all: ["red", "black"] } }) => CONTAINS, want to find the field 'tags' which HAS "red" and "black", without regard to the order
+db.coll.find({ tags: { $lt: 10, $gt: 2 } }) => to find those elements in tags, which this one < 10 AND another > 2
+db.coll.find({ tags: { $elemMatch: { $lt: 10, $gt: 2 } } }) => to find certain element, which > 2 AND < 10
+db.coll.find({ "tags.1": 10 }) => to find the second element which is 10
+db.coll.find({ tags: { $size: 3 } }) => to find tags which has 3 elements
+
+Query an Array of embedded documents
+i.e., [ 
+		{ arrs: [ { a: 1, b: 2 } ] },
+		{ arrs: [ { a: 1, b: 0 }, { a: 3, b: 2 } ] },
+	  ]
+db.coll.find( { "arrs.b": 2 } ) => 2 documents found, to find the any element of arrs which has b = 2
+db.coll.find( { "arrs.0.b": 2 } ) = 1 document found, to find the first element of arrs if it has b = 2
+
+数组比较查询时，有以下几种情况，
+1、[arrs1] = [arrs2]，也可以是其他比较符，两数组完全相等，才被筛选出来
+2、[arrs] = 1，也可以是其他比较符，这种时候，我们采用所谓“代表制”，有一个数组项满足查询条件即可
+3、[arrs] > 1 AND < 5，依旧是“代表制”，一个数组项满足一个条件，即可
+4、$elemMatch，需要数组项同时满足所有条件
+所谓代表制，就好比奥运会，个人比赛水平，代表国家水平，博尔特跑得最快，我们就认为肯尼亚是跑得最快的国家。
+
+
+db.serverStatus().metrics.cursor??
+
+Text Search
+db.collection.createIndex( { field1: "text", field2: "text" } )
+db.collection.getIndexes()
+
+db.collection.find( { $text: { 
+	$search: "criteria1 criteria2 criteria3", 
+	$caseSensitive: Boolean,
+	$language: "en"
+ } } )
+
+Use whitespace, comma, semicolon, etc., as the delimiters to perform the logical OR,
+db.collection.find( { $text: { $search: "java coffee shop" } } )
+db.collection.find( { $text: { $search: "java, coffee, shop" } } )
+
+Perform the logical AND,
+db.collection.find( { $text: { $search: "\"java\" \"coffee\"" } } )
+
+Wrapping phrase with double-quotes
+db.collection.find( { $text: { $search: "\"coffee shop\"" } } )
+db.collection.find( { $text: { $search: '"coffee shop"' } } )
+
+db.collection.find( { $text: { $search: "java \"coffee shop\"" } } )
+** failed to find the entry including 'java'??
+** full-text search is unable to support the multiple phrases search.
+
+Order by metadata "textScore"
+Mongodb outputs the result unsorted as default. 
+However, text search will compute a "relevance score" for each document indicates how well the a document matches the query.
+Explicitly project $meta textScore field and sort on it. desc only.
+
+db.stores.find(
+   { $text: { $search: "java coffee shop" } },
+   { score: { $meta: "textScore" } }
+).sort( { score: { $meta: "textScore" } } )
+
+
+Text Search with Basis Technology Rosette Linguistics Platform
+Inder to support six additional languages, Mongodb Enterprise integrates Basis Technology Rosette Linguistics Platform (RLP) to perform normalization, word breaking, sentence breaking, and stemming or tokenization depending on the language.
+
+Stop words
+Most Search Engines do not consider extremely "common words", something like "a", "the", "about", "above", etc., so that can save disk space or to speed up search results.
+高频词出现概率高，几乎每个页面都会大量出现这些词语，如果用于搜索，那么会有很大的工作量，并且结果无意义。因此，搜索引擎会考虑忽略它们。
+Stop words由人工收集生成stop words list。每种语言的Stop words都不一样。
+
+aggregate
+$lookup	=> join
+
+$unwind, convert a array to a object
+tag: [1, 2, 3] => { tag: 1, tag: 2, tag: 3 }
+
+$group => group by
+$match => having
+db.items.aggregate([
+	{ 
+		$group: {
+			_id: "$item",
+			quantity: { $sum: "$quantity" }
+		}
+	},
+	{
+		$match: {
+			quantity: { $gt: 10 }
+		}
+	}
+])
