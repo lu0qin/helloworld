@@ -2,6 +2,8 @@
 
 >CMD
 >mongod --dbpath c:\data\db
+or
+>mongod --dbpath=c:\data\db
 start mongo db, and specify the db location
 
 >mongo
@@ -9,9 +11,9 @@ start mongo db, and specify the db location
 #Run MongoDB as Windows service
 >Administrator Command (Ctrl + Shift + Enter)
  create the Windows service, as the role of Admin
->mongod --config C:\Tools\MongoDB\mongod.cfg --install --serviceName Apple
->net start Apple
->net stop Apple
+>mongod --config C:\Tools\MongoDB\mongod.cfg --install --serviceName MongoDB
+>net start MongoDB
+>net stop MongoDB
 >cd <mongodb installation dir>
 >./bin/mongo
 
@@ -20,7 +22,7 @@ U can prevent it from being loaded by using --norc.
 >mongo --norc
 
 #conf file
->path-to-installation\bin\mongod.conf
+><installation dir>\bin\mongod.conf
 dbpath can be found in conf file
 
 -----TIPS-----
