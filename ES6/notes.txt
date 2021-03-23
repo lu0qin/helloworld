@@ -1,0 +1,160 @@
+ECMAScript 6 (ES 6)是下一代JavaScript
+
+2011年，ECMAScript 5.1发布以后，就开始制定6.0版。ES6原意是指JavaScript语言的下一个版本。
+ES6的第一个版本在2015年6月发布，正式命名是ECMAScript 2015 （ES2015）。
+ES6是是一个历史名词，也是一个泛称，指5.1以后发布的JavaScript，泛指ES2015以后的版本。
+每年6月会发布新增功能，以年份命名，如ES2016、ES2017。
+
+ECMA的前身是欧洲电脑制造商协会（European Computer Manufactures Association）
+
+
+ES6 new features:
+1. 	block scope - let
+2. 	var, function are used to declare the global variables
+
+3. 	global is added as the top level object. 
+3.1 global variable (var) is NOT equal to window object (global object in node) any more.
+
+4.1	Array Destructuring
+	let [a, b, c] = [1, 2, 3];
+	let a = 1, b = 2, c = 3;
+
+	let [x, y, z] = new Set(['a', 'b', 'c']);
+	> x = 'a'
+
+4.2	Array default value
+	let [x, y = 2] = [1];
+	> x = 1
+	> y = 2
+
+	Don't use function as the default value
+	function f() { return 2; }
+	let [x = f()] = [1];
+	> x = 1
+
+4.3	Object destructuring
+	对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者。
+	let { foo: baz } = { foo: "aaa", bar: "bbb" };
+	> baz = "aaa"
+	> foo is undefined
+	> bar is undefined
+
+4.4	Object default value
+	{x, y = 5} = {x: 1};
+	> x = 1
+	> y = 5
+
+4.5	String destructuring
+	const [a, b, c, d, e] = 'hello';
+	> a = 'h'
+	> b = 'e'
+
+	let {length : len} = 'hello';
+	> len = 5	// len = String.length;
+
+4.6	Number destructuring
+	会先将右侧转化为对象
+	let {toString: s} = 123;
+	> s is [Function: toString]
+	s === Number.prototype.toString	// true
+
+4.7	Boolean destructuring
+	let {toString: s} = true;
+	s === Boolean.prototype.toString // true
+
+5 Set
+	let set = new Set([1, 2, 3]);
+	set.constructor.name	// Set
+	set.add(4)
+	set.size				// 4
+	set.keys()				// { 1, 2, 3, 4 }
+	set.values()			// { 1, 2, 3, 4 }
+	set.entries()			// { [1, 1], [2, 2], ... }
+	set.clear()
+	Set的值不可重复
+	set无键名，只有键值，也可以认为set的键名和键值是一样的。
+
+	const set = new Set([1, 2, 3]);
+
+	for (let item of set.keys()) {
+		console.log(item);	// 1 2 3
+	}
+
+	for (let item of set.values()) {
+		console.log(item);	// 1 2 3
+	}
+
+	for (let item of set.entries()) {
+		console.log(item);	// [1, 1] [2, 2] [3, 3]
+	}
+
+6	Map
+	let map = new Map();
+	const o = { p: "hello world" };
+	map.set(o, val)
+	map.get(o)
+	map.has(o)
+	map.delete(o)
+	map.size
+	map.clear()
+
+	let map = new Map([
+		["name", "Liz"],
+		["title", "es map"]
+	]);
+	map.get("name")		// "liz"
+
+	const items = [
+		["name", "Liz"],
+		["title", "es map"]
+	];
+	let map = new Map();
+	items.forEach(
+		([key, val]) => map.set(key, val)
+	);
+	map.get("title")	// "es map"
+
+	const k1 = "a";
+	const k2 = "a";
+	let map = new Map([
+		[k1, 1],
+		[k2, 2]
+	]);
+	map.get(k1);	// 1
+	map.get(k2);	// 2
+	map的键值跟内存绑定，只要内存不一样就会视作两个键。
+
+	const map = new Map([
+		['F', 'no'],
+		['T',  'yes'],
+	]);
+	
+	for (let item of map.keys()) {
+		console.log(item);		// "F" "T"
+	}
+
+	for (let item of map.values()) {
+		console.log(item);		// no yes
+	}
+
+	for (let item of map.entries()) {
+		console.log(item);		// [ 'F', 'no' ] [ 'T', 'yes' ]
+	}
+
+	for (let item of map.entries()) {
+		console.log(item[0], item[1]);	// F no   T yes
+	}
+
+	for (let [key, val] of map.entries()) {
+		console.log(key, val);			// F no   T yes
+	}
+
+7.	for/of instead of for/in
+
+8. Template Literals
+   Using back-ticks (`) to wrap texts, which makes strings more easier.
+   ${expression} notation. i.e.,
+   var host = `abc.com`;
+   var text = `this blog is at ${host}`;
+   console.log(text);	// this blog is at abc.com
+   
