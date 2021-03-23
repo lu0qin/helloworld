@@ -9,23 +9,40 @@ ECMA的前身是欧洲电脑制造商协会（European Computer Manufactures Ass
 
 
 ES6 new features:
-1. 	block scope - let
-2. 	var, function are used to declare the global variables
+1. block scope - let
+2. var, function are used to declare the global variables
 
-3. 	global is added as the top level object. 
-3.1 global variable (var) is NOT equal to window object (global object in node) any more.
+3.	global variable (var) is equal to the top level object. 
+3.1 	global let, const, class are NOT equal to the top level object.
+	> var a = 1;
+	> window.a	// 1
+	> let b = 2;
+	> window.b	// undefined
+3.2	global var 'window' in browser, 'global' in node.
+3.3 	globalThis
+	> var a = 1;
+	> globalThis.a	// 1
 
 4.1	Array Destructuring
 	let [a, b, c] = [1, 2, 3];
 	let a = 1, b = 2, c = 3;
 
-	let [x, y, z] = new Set(['a', 'b', 'c']);
+	> let [x, y, z] = new Set(['a', 'b', 'c']);
 	> x = 'a'
 
 4.2	Array default value
-	let [x, y = 2] = [1];
-	> x = 1
-	> y = 2
+	> let [x, y = 2] = [1];
+	x = 1, y = 2
+	
+	
+	> let [a = 1] = []
+	a = 1
+	
+	> let [b = 2] = [undefined]
+	b = 2
+	
+	> let [c = 3] = [null]
+	c = null
 
 	Don't use function as the default value
 	function f() { return 2; }
