@@ -181,3 +181,30 @@ ES6 new features:
    var text = `this blog is at ${host}`;
    console.log(text);	// this blog is at abc.com
    
+9.1	Encode
+	convert character to Unicode
+	> "a".charCodeAt(0);		// 97 (int dec)
+	or
+	> "a".charCodeAt();		// 97 
+
+	convert Unicode to character
+	> String.fromCharCode(97);	// "a"
+
+	decimal to hex/oct
+	> Number(97).toString(16);	// 61
+	> Number(97).toString(8);	// 141
+
+	hex to decimal
+	> parseInt("61", 16);		// 97
+
+	use unicode in html
+	> let char = "\u0061";
+	> console.log(char);		// "a"
+9.2	Unicode in ES6
+	> '\z'				// 'z'
+	> '\172'			// 'z' (oct)
+	> '\x7A'			// 'z' (hex)
+	> '\u007A'			// 'z' (unicode)
+	> '\u{7A}'			// 'z' (unicode)
+	> String.fromCharCode("122")	// 'z' (dec)
+   
