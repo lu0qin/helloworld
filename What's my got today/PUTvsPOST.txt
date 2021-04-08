@@ -1,0 +1,25 @@
+
+					PUT	POST
+idempotent				N	Y
+able to create resource			Y	Y
+has specified name/url of resource	N	Y
+
+i.e.
+
+update by POST:
+POST /questions/<questionId> HTTP/1.1
+Host: www.example.com/
+
+creation by POST:
+POST /questions HTTP/1.1
+Host: www.example.com/
+
+update by PUT:
+PUT /questions/<existing_question> HTTP/1.1
+Host: www.example.com/
+
+creation by PUT:
+PUT /questions/<new_question> HTTP/1.1
+Host: www.example.com/
+
+need to be proved. #3 (3.3.4 & 3.3.5)
