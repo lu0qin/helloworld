@@ -1,0 +1,22 @@
+var arr, brr;
+arr = [1];
+brr = arr.push([2]);	// 2 (arr.length)
+
+arr = [1];
+arr.push([]);		// [1, []]
+
+arr = [1];
+arr.push([2], [3]);	// [1, [2], [3]]
+
+var arr, brr;
+arr = [1];
+brr = arr.concat([2]);	// [1, 2]
+
+arr = [1];
+brr = arr.concat([]);	// [1]
+
+arr = [1];
+brr = arr.concat(2,3);	// [1,2,3]
+
+arr = [1];
+brr = arr.concat([2],[3]);	// [1,2,3]
