@@ -1,0 +1,31 @@
+﻿websocket
+socket.io
+the difference?
+
+- 4.22
+
+
+通过websocket传输的数据，每次接受的是增量还是全部消息？
+
+- 4.24
+
+
+node -w ./
+
+
+ui5 require/define??
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+ui5loader
+https://sapui5.hana.ondemand.com/#/api/sap.ui.loader%23methods/Summary
+
+run `npm audit fix` to fix them, or `npm audit` for details
+
+1.index.html
+  data-sap-ui-compatVersion="edge"
+2.gruntfile
+  compatVersion: "edge"
+
+
+

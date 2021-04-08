@@ -1,0 +1,3 @@
+var arr = [1, 2, 3];
+var firstNode = arr.shift();
+-> firstNode = 1; arr = [2, 3];

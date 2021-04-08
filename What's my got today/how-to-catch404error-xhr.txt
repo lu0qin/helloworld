@@ -1,0 +1,29 @@
+1. catch 404
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "http://localhost/123");
+
+// catch 404 error in handler of load event
+xhr.onload = function() {
+  console.log(xhr.status);
+};
+
+xhr.send();
+
+
+2. catch CROS error
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "http://localhost/");
+
+xhr.onerror = function() {
+  console.log("error happens");
+};
+
+try {
+  xhr.send();
+  if(xhr.status === 0) {
+    throw new Error("xhr status is 0");
+  }
+} catch(error) {
+  console.error(error.name, ":", error.message);
+}
+事实上，很多异步操作，比如XHR,无法通过try/catch来准确定位错误，只能借助browser console tool来查明error原因。

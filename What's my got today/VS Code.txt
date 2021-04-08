@@ -1,0 +1,5 @@
+launch vs code in cli
+>cd <dir>
+>code .
+>code --help
+>code -d <file 1> <file 2>

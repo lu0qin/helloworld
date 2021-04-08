@@ -1,0 +1,17 @@
+convert character to Unicode
+> "a".charCodeAt(0);		// 97 (int dec)
+or
+> "a".charCodeAt();		// 97 
+
+convert Unicode to character
+> String.fromCharCode(97);	// "a"
+
+decimal to hex
+> Number(97).toString(16);	// 61
+
+hex to decimal
+> parseInt("61", 16);		// 97
+
+use unicode in html
+> let char = "\u0061";
+> console.log(char);		// "a"

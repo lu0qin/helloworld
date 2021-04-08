@@ -1,0 +1,11 @@
+Open folder
+>start .
+>start ..
+>start shell:startup
+
+Open chrome
+>start chrome
+
+print env variable
+>path
+>echo %path:;=&echo.%
