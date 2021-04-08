@@ -1,0 +1,125 @@
+npm: Node Package Manger
+
+### npm config
+
+npm config set proxy http://username:psw@server:port
+npm config set https-proxy http://username:psw@server:port
+npm config get proxy
+
+npm config get cache
+View the cache directory.
+
+npm cache ls
+View the modules info.
+
+npm config set registry http://registry.npmjs.org
+npm config get registry
+
+npm config get prefix
+npm config set prefix "directory"
+	On Windows, the default prefix (path) is Nodejs installation directory,
+	or 'usr\AppData\Roaming\npm'. that's depend on your system permission.
+
+	npm config get prefix
+	-> "${USR}\AppData\Roaming\npm"
+	set USR as the evn variable
+
+	npm install "package" -g
+	-> "${prefix}\node_modules\package"
+
+	U can change the default directory to somewhere else
+	npm config set prefix "usr\npm_global"
+	so the package will be installed in "usr\npm_global\node_modules" instead of the default one
+
+AppData contains app settings, files and data specific to apps on your PC. It's hidden by default.
+It has three hidden sub-folders:
+1. Roaming. roaming data can be moved from one PC to another in your account, because data has ability to sync with server.
+2. Local
+3. LocalLow
+
+
+### Upgrade npm on Windows
+
+npm install npm -g
+npm install npm@latest -g
+npm -v
+Sometimes upgrade npm, but the version displayed is old.
+pls find the solution in the reference https://github.com/npm/npm/wiki/Troubleshooting
+On Windows, it will always show the version installed instead of the updated.
+I tried to use option 2 and it worked.
+
+
+### Update packages
+
+npm install <package>
+If no package.json, the latest version will be installed
+
+npm install <package> --save
+The dependency will be added to package.json
+
+npm update -g
+Update all packages
+
+npm outdated
+npm outdated -g
+npm outdated --depth=0
+We can get which packages are old. Package, Current, Wanted, Latest and Location will be listed.
+
+
+### Install package
+
+npm install <pakcage> -f
+npm install <package> --force
+The package will be installed again, even if it's in the "node_modules" already.
+
+npm install --cache-min 9999999 <package>
+npm install --cache-min Infinity <package>
+
+npm-cache install <package>
+the third party tool
+
+
+### View package info
+npm view <package>
+it'll show the package info as the link below,
+https://registry.npmjs.org/<package>
+https://registry.npmjs.org/<package>/<version>
+
+
+### list
+npm list -g --depth=0
+### Create a package
+cd <app folder>
+npm init
+
+
+### add user
+npm adduser
+npm whoami
+luoqin/******
+the token is stored in .npmrc
+
+
+npm install package -g --registry=http://host
+
+If something wrong with install the module, pls first check the registry is the right location.
+
+
+### dist-tag - create an alias of certain version
+npm dist-tag add <package>@version <tag>
+npm dist-tag rm <package> <tag>
+
+meta-commands
+.help
+.clear ???
+.exit
+
+alias
+
+npm install = npm i
+
+REPL
+read-evaluate-print-loop
+> node
+
+
