@@ -1,0 +1,403 @@
+﻿SCM is Software Configuration Management.
+
+GitHub is the web-based Git repository hosting service (托管) for version control and collaboration.
+
+Open Git Bash in the specific directory
+Start Menu -> Git Bash
+Right click -> Open file location
+Git Bash -> Right click -> Shortcut tab -> Start in: %DIR%
+
+
+Checksum
+id of staged / committed object, made of 40 char SHA-1.
+每次暂存(stage)，Git为每个（子）目录、文件的计算校验和，将版本文件快照存入Git repo，校验和缓存。
+每次提交(commit)，Git计算校验和，并将之前缓存文件的校验和存为树对象(commit object)。
+通过checksum，可以找到提交文件树对象,继而找到缓存文件快照。
+
+
+3 states:
+working directory		stating area		local repo (database)
+	|						 |						|
+	|----------------------->|--------------------->|
+	|			add			 |		  commit		|
+	|						 |						|
+	|		reset HEAD		 |						|
+	|<-----------------------|						|		
+	|					checkout					|
+	|<----------------------------------------------|
+
+git add: select changes
+git commit: store in repo and snapshot it
+
+Git config
+
+On Windows, Git reads and writes configurations
+1. of specific user in $HOME/.gitconfig. --global
+2. of certain repo in the Git directory, i.e, _repo_/.git/config
+
+open Git Bash,
+$ echo $HOME
+/C/Users/i070218
+$ cd $HOME
+$ git config --list
+$ git config --global user.name "luoqin"
+
+$ cd repo/.git.config
+$ git config user.name
+qin
+$ git config --global user.name
+luoqin
+
+Manpage help
+$ git help <verb>
+$ git help config
+
+$ git <verb> --help
+$ git add --help
+
+
+Create an empty repo, or renew the existing repo
+$ git init
+
+
+Commit
+$ git commit -a
+add and commit all tracked files
+
+
+
+$ git commit -m "some comments"
+$ git add <forgotten file>
+$ git commit -—amend
+
+Amend/replace the last commit. Two "commit", one record.
+
+
+Changes
+$ git diff
+compare staging area with working tree
+
+$ git diff -staged (Recommended)
+$ git diff -cached
+compare staging area with last commit
+
+$ git diff <commit 1> <commit 2>
+compare differences between commit 1 and commit 2
+
+$ git diff --check
+Warn the whitespace error.
+
+$ git difftool --tool-help
+check the diff tool can be used on your machine
+
+
+Remove repo
+$ cd _repodir_
+$ rm -af .git
+
+
+Remove directory from disk
+$ rm -rf dir
+-r --recursive
+-f --force
+
+Remove files from Git
+$ git rm file
+$ git rm dir
+$ git commit
+Notice, unable to git rm (delete) a file has changes in working tree or staging area. Unless,
+$ git rm -f file
+
+Remove files from Git Staging area, but remain in disk
+$ git rm --cached file
+
+
+Rename file
+$ git mv nowname formername
+
+Remove file
+$ git mv file dir/
+
+
+Log
+$ git log
+$ git log -p -2
+show 2 latest logs with diff info
+$ git log --stat
+with statistics info
+$ git log --pretty=oneline
+each commit one line
+$ git log --pretty=format:"..."
+$ git log --since=2.days
+limit log output
+
+
+Undoing
+Unstaging a staged file
+$ git reset HEAD <file name>
+to unstaged, after $ git add <file name>
+
+Unmodifying a modified file
+$ git checkout -- <file name>
+
+
+Show remote repo info
+$ git remote
+origin
+the default name of the Git repo server
+$ git clone https://host -o <repo name>
+$ git clone https://host <local name>
+$ git remote rename <old> <new>
+
+$ git remote -v
+origin http://host
+-v --verbose
+
+
+$ git ls -remote
+
+0425db84fd92d3a70d2f71030daa465052e2dda8	HEAD
+
+420fabc33942556153910f62f64f2901108b2614	refs/heads/iss53
+0425db84fd92d3a70d2f71030daa465052e2dda8	refs/heads/master
+
+
+Add/remove repo
+$ git remove add <remote repo name> http://host
+$ git remove rm <remote repo name>
+
+$ git fetch <remote repo name>
+$ git push <remote repo name> <branch name>
+
+fetch + merge = pull
+fetch以后的文件存在哪里，如果不merge是否就不是一个commit??
+
+
+Tag
+
+list
+$ git tag
+$ git tag -l v1.2.*
+-l --list
+
+show info
+$ git show <tag name>
+
+add
+$ git -a <tag name> -m "my version"
+-a --annotation
+$ git -a <tag name> <commit checksum>
+$ git tag <tag name>
+
+sharing
+$ git push origin <tag name>
+$ git push origin --tags
+$ git checkout -b <branch name> <tag name> 
+
+
+
+Branch and Merge
+$ git branch <branch name>
+create a new branch
+
+$ git branch -d <branch name>
+delete a branch
+
+$ git branch
+list all branches
+$ git branch -vv
+$ git branch --merged
+$ git branch --no-merged
+$ git branch -r
+
+$ git checkout <branch name>
+switch to the branch
+$ git checkout -b <branch name>
+create and switch to the new branch
+
+$ git checkout master
+$ git merge hotfix
+merge hotfix to master
+
+
+Fetch Branch
+$ git fetch <repo>
+update data of every branch from remote
+
+$ git fetch <repo> <branch>
+$ git fetch <repo> <remote>:<local>
+
+$ git checkout -b <local> <repo>/<remote>	--|
+$ git checkout --track origin/<remote>		--| shortcut
+Notice, cannot fetch or checkout a repo already existing or non-bare.
+In this situation, U should use $ git pull.
+
+
+Set upstream
+$ git checkout <branch>
+For Windows
+$ git branch -u <repo>/<remote branch>
+For Mac
+$ git branch —set-upstream-to <repo>/<remote branch>
+@{u} ???
+
+Push branch
+$ git push origin <branch>
+$ git push origin <local>:<remote>
+$ git push -u origin <local>:<remote>
+
+Delete remote branch
+$ git push <repo> -d <branch>
+
+
+Rebase
+$ git rebase <to branch>
+$ git rebase <to branch> <involved branch>
+
+$ git checkout iss
+$ git rebase
+
+$ git rebase master iss
+
+
+
+3 types of merge or rebase
+
+1. Fast forward
+
+C1 —> C2 -> C3 -> C4
+      |			  |
+    master		iss53
+
+C1 —> C2 -> C3 -> C4
+				  |
+   				iss53
+				master
+
+
+2. Three-way merge
+
+		  master
+		    |
+C1 —> C2 -> C3
+\
+ ———> C4 -> C5
+	    	|
+		  iss10
+
+				master
+				  |
+C1 —> C2 -> C3 —> C6
+  \				  /
+   —> C4 -> C5 ——
+			|
+		  iss10
+
+
+3. Rebase
+
+		  master
+	    	|
+C1 -> C2 -> C3
+  \
+   —> C4
+      |
+   issue10
+
+
+
+$ git rebase master issue10
+
+	  			master
+				  |
+C1 -> C2 -> C3 -> C4*
+		   |
+		issue10
+
+
+$ git checkout master
+
+$ git merge issu10
+
+	  	master
+
+		   |
+
+C1 -> C2 -> C3 -> C4*
+
+		   |
+
+		issue10
+
+
+Revert to specific commit
+
+Way #1
+$ git checkout <commit id>
+it's temporary.
+
+	   HEAD (master)
+		|	
+a - b - c
+
+$ git checkout b
+
+   HEAD
+	|	
+a - b - c
+
+$ edit; git add; git commit
+
+   HEAD
+	|
+	e
+	|
+a - b - c
+
+$ git checkout master
+
+	   HEAD (master)
+		|	
+a - b - c
+
+As commit e is not connected to any branch, it will be deleted by GIT gc later.
+If you want to keep it, u need to create a new branch,
+$ git checkout -b <new branch name> e
+It's so-called "DETACHED HEAD", used for inspection or experiment.
+
+这里有一个概念需要注意，签出一个分支，通常是指签出这个分支的最新一次提交。
+$ git checkout <branch>
+HEAD -> the last commit of the <branch>
+$ git checkout <commit>
+HEAD -> the <commit>， not connected to certain branch, it's possible HEAD doesn't refer to the branch.
+这时就产生了DETACHED HEAD，于是伪分支出现了。
+
+Way #2
+$ git reset --soft <commit>
+only reset HEAD to <commit>, no changes in working tree and index.
+just like U made some modifications, but not commit.
+
+$ git stash
+$ git reset --hard <commit>
+$ git stash pop
+
+git stash = git stash push -m "message"
+GIT会保存当前修改至stash stack，并且保证working tree是HEAD commit指向的内容。
+当你的new feature开发到一半，来了一个urgent bug fixing时，就可以使用git stash，这样就不会有一个未完成的commit。
+git stash list
+git stash show stash@{0}
+git stash pop
+
+Way #3
+$ git revert <commit>
+注意，这个命令恢复补丁（增量），而非快照。
+依次执行以下伪命令：
+$ git edit file-2			#1
+$ git add file-1			#2
+$ git edit file-2 again		#3
+$ git revert #1
+这是，通常会出现冲突处理提示，我们可以用merge合并两次操作。
+但同时会发现，file-1依旧存在，这是因为revert处理的是增量而非快照。
+
+
+
