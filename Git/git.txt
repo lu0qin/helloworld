@@ -1,0 +1,123 @@
+>git branch		list local branches
+
+>git branch -a		list all branches both local and remote
+
+>git branch -r		list remote branches
+
+>git fetch -p
+>git fetch --prune	remove local ref if it's already removed on remote
+
+如果local和remote都有一个branch A，remote删除A后，run
+>git fetch -p，更新remote branch ref，
+>git branch -a，可以看到remote branch ref of A，被删除了。但local branch A依然存在。需要手动删除。
+
+
+>git config --global --list			global
+>git config --list				local，一般位于git repo/.git/config
+>git config --list --show-origin		查看所有配置和配置文件
+>git config --list --global --show-origin	查看global配置和global配置文件
+>git config --list --show-origin --show-scope	global, system, local, ...
+
+>git config --edit
+>git config --global --edit	Notepad打开config file
+
+>git diff
+show changes between commit and working tree
+
+>git log --stat -p -2 --pretty=[oneline] --graph --no-merges
+-p | --patch		修改增量细节
+--stat			修改summary
+-N			最近共N次修改
+--pretty=oneline	<hash> <title line>
+--pretty=reference	<abbrev hash> (<title line>, <short author date>)
+--graph			text-based graphical representation of the commit history
+--no-merges		不显示合并提交信息
+-- <file path>
+--oneline		--pretty=oneline --abbrev-commit
+--abbrev-commit		i.e., commit a546504 (origin/i18n, i18n)
+
+some mixed commands:
+>git log -10 --pretty=reference --graph
+
+
+删除远程branch
+>git push origin -d | --delete <remote branch 1, remote branch 2, ...>
+
+--amend，修改上一次的提交信息(commit messages)，或者修正上一次的提交内容（配合git add使用）。
+修正信息会完全替代上一次的commit。
+>git commit --amend			打开默认编辑器
+>git commit --amend --no-edit		新的提交（覆盖上一次提交），但不修改commit messages
+>git commit --amend -m "comments"	新的提交（覆盖上一次提交），在command line输入commit message，不用打开editor
+
+
+>git remote
+origin
+
+>git remote -v
+origin https://host.com/path (fetch)
+origin https://host.com/path (push)
+
+>git remote show <remote>
+>git remote show origin
+查看远程仓库详细信息
+
+>git remote rename <old_remote> <new_remote>
+
+>git remote remove <remote>
+
+How to fetch files from remote
+>cd <dir>
+>git init
+>git remote add <remote_alias> <url>
+>git fetch <remote_alias>
+>git checkout <branch>
+
+如果用clone命令，会直接下载远程仓库源文件，并且将这个仓库命名为origin
+>git clone <url>
+>git remote
+origin
+
+
+>git config --global alias.last 'log -1 HEAD'
+>git last == git log -1 HEAD
+
+
+Git Tag
+
+list all tags:
+>git tag
+>git tag -l | --list
+
+list some tags:
+>git tag -l|--list <tag_name>|<partial_tag_name>
+
+show tag:
+>git show <tag_name>
+
+add annotated tag:
+>git tag -a <tag_name> -m "description" <commit_hash>
+
+add lightweight tag:
+>git tag <tag_name> <commit_hash>
+
+difference between annotated tag and lightweight tag:
+lightweight tag is the reference to the specific commit.
+annotated tag has the further message, with its own SHA???
+
+delete tag:
+>git tag -d <tag_name>
+
+checkout tag:
+>git checkout <tag_name>
+
+
+
+head, master ?
+git log <hash>
+hash
+reset vs checkout
+HEAD
+detached head
+SHA
+
+
