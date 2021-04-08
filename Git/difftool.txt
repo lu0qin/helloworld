@@ -1,0 +1,8 @@
+1. set the diff/merge tool
+>git config --global --list
+merge.tool=p4merge
+mergetool.p4merge.path=C:/Program Files/Perforce/p4merge.exe
+
+2. show the difference parts
+>git difftool <commit-id> <file dir>  -y
+-y | --no-prompt
