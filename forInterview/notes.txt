@@ -1,0 +1,41 @@
+Boolean operators
+!    &&    ||
+
+Boolean({})	// object -> true
+Boolean("")	// empty string -> false
+Boolean("aaa")	// string -> true
+Boolean(1)	// number -> false
+Boolean(null)	// false
+Boolean(undifined)	// false
+Boolean(NaN)	// false
+
+object1 && object2	// object2 
+({}) && [1, 2]	// [1, 2]
+either operand is NaN	// NaN
+either operand is undefined	// undefined
+either operand is null	// null
+当第一个运算符为false时，解释器不会继续执行与运算，而直接返回false
+false && undefined	// false
+true && undefined	// error
+
+to be continued
+object || boolean	// object
+[1, 2] || true	// [1, 2]
+当第一运算符为true时，解释器不会继续执行或运算，直接返回true
+true || object	// true
+true || NaN 	// true
+true || undefined	// true
+true || null	// true
+
+
+
+
+
+Equality operators
+==    !=
+===  !==
+rules:
+Boolean, String convert to Number before equality checking
+NaN ==  NaN	// false
+null == undefined	// true
+
