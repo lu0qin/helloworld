@@ -1,0 +1,5 @@
+--single-run | --single-run = true
+所有的case都运行在同一个browser instance下。
+
+--no-single-run | --single-run = false
+每个test case各自运行在独立的browser instance下。debug模式下，应设置--no-single-run
