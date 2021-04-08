@@ -1,0 +1,16 @@
+cqlsh> CREATE keyspace <keyspace>;
+
+cqlsh> DESCRIBE keyspaces;
+cqlsh> SELECT * FROM system_schema.keyspaces;
+
+cqlsh> USE <keyspace>;
+
+cqlsh:keyspace> DESCRIBE tables; 
+
+cqlsh:keyspace> CREATE TABLE person (
+   		    column_name1 type,
+   		    column_name2 type,
+		    ...,
+   		    id UUID,
+   		    PRIMARY KEY (id)
+		);
