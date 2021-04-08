@@ -1,0 +1,83 @@
+Docker Hub
+https://hub.docker.com/
+
+$ docker pull <image>
+pull <image> from Docker Hub and save it.
+
+$ docker images
+list all images
+
+$ docker run <image>
+create an isolated container, which run on a host.
+
+$ docker run -d -P --name <name> <image>
+-d: run in the detached / background mode
+-P: random ports
+
+$ docker run -p <new>:<default> <image>
+$ docker run -p 8888:80 nginx
+
+$ docker run -it <image>
+-t: Allocate a pseudo-tty
+-i: Keep STDIN open even if not attached
+
+$ docker run --rm <image>
+remove the container automatically once it exited.
+
+$ docker create <image>
+create the container, but not running
+
+$ docker start <container>
+
+$ docker stop <container>
+
+$ docker restart <container>
+
+$ docker attach <container>
+connect to the container of detached mode
+
+$ docker ps
+show the running containers
+
+$ docker ps --all
+list all containers, default just display running
+
+$ docker ps -q
+list containers only with their ids
+
+$ docker ps -f <conditions>
+$ docker ps -f status=exited
+filter output based on conditions
+
+$ docker rm <container 1, container 2, ...>
+$ docker rm $(docker ps -q -f status=exited)
+remove by conditions
+
+$ docker rmi <image 1, image 2, ...>
+
+$ docker build -t <name> <path>
+
+$ docker login
+$ <email>
+$ <password>
+
+$ docker tag <source image> <target image>
+
+$ docker push <image>
+
+$ docker inspect <image / container> --format={{.Id}}
+{{...}} - Go template
+
+$ docker commit --message "message" --author "author" <container> <repo>
+repo = image
+
+$ docker save <repo:tag> > <file.tar>
+$ docker save <image> > <file.tar>
+$ docker save --output <file.tar> <repo:tag>
+
+$ docker load < <file.tar>
+$ docker load --input <file.tar>
+
+$ docker export <container> > <file.tar>
+
+$ docker logs <container>
