@@ -1,0 +1,5 @@
+"files": [
+    "tasks"
+]
+
+will includes all the files in "tasks" folder

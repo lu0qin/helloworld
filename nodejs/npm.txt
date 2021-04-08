@@ -1,0 +1,17 @@
+list first depth dependencies of package
+>npm list --depth=0
+
+Get the local node_modules directory
+>npm root
+C:\Users\i070218\Documents\CodeRepo\npm\express\node_modules
+
+Get the global node_modules directory
+>npm root -g
+C:\Program Files (x86)\Nodist\bin\node_modules
+
+>npm cache verify
+verifies the contents of the cache folder, GC the data no long in use, and verifies all the cached data.
+Cache verified and compressed (~\AppData\Roaming\npm-cache\_cacache):
+Content verified: 5 (14067912 bytes)
+Index entries: 6
+Finished in 0.192s
