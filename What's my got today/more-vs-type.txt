@@ -1,0 +1,5 @@
+> type [files]
+display every file content one time
+
+> more [files]
+display content one screen one time, U need to press [SPACE] to display the next screen.
